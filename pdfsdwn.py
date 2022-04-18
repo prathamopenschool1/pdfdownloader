@@ -27,5 +27,6 @@ def downloader_pdf():
                 smart.write(request_url.content)
 
     
+    
 downloader_pdf()
 
