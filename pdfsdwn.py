@@ -14,8 +14,11 @@ def downloader_pdf():
     df = pd.DataFrame(df)
     ext = '.pdf'
     df = df.dropna()
-    df['cont_dwurl'] = df['cont_dwurl'].astype(str)
-    df['subject'] = df['subject'].astype(str)
+    # df['cont_dwurl'] = df['cont_dwurl'].astype(str)
+    # df['subject'] = df['subject'].astype(str)
+
+    df = df.applymap(str)
+    print(df.dtypes)
 
     for i, j in df.itertuples(index=False):
         if i.endswith(ext):
