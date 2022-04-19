@@ -18,7 +18,7 @@ def downloader_pdf():
     # df['subject'] = df['subject'].astype(str)
 
     df = df.applymap(str)
-    print(df.dtypes)
+    # print(df.dtypes)
 
     for i, j in df.itertuples(index=False):
         if i.endswith(ext):
