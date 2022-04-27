@@ -14,7 +14,6 @@ def downloader_pdf():
     df = pd.read_excel(file_name, sheet_name=sheet_name)
 
     df = pd.DataFrame(df)
-
     
     df = df.dropna(how='all', axis='columns')
     df = df.dropna()
