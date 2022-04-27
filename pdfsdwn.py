@@ -13,19 +13,19 @@ def downloader_pdf():
 
     df = pd.read_excel(file_name, sheet_name=sheet_name)
 
+    print("oldf df >>>>>>>>>>> ")
+    print(df)
+
     df = pd.DataFrame(df)
 
-    df = df.dropna(how='all', axis='columns')
-    df = df.dropna()
+    df.fillna(value=0, inplace=True)
+
+    # df = df.dropna(how='all', axis='columns')
+    # df = df.dropna()
 
 
     try:
-        whitespace_remover(df)
-
-        # cols  = list(df)
-        # for i in cols:
-        #     print(i, "cols")
-
+        # whitespace_remover(df)
         counts = len(df.columns)
         print("counts", counts)
 
@@ -90,9 +90,11 @@ def downloader_pdf():
                                     smart.write(request_url.content)
                 
             for index1, j in enumerate(df['cont_thumburl']):
+                end_name_j = os.path.basename(j)
+                print("end name is ", end_name_j, index1)
                 valid_url_j = validators.url(j.strip())
                 if valid_url_j == True:
-                    # print(valid_url_j, index, i)
+                    print(valid_url_j, index1, j)
                     end_name_j = os.path.basename(j)
                     print("end name is ", end_name_j, index1)
                     if end_name_j != '':
