@@ -13,15 +13,22 @@ def downloader_pdf():
 
     df = pd.read_excel(file_name, sheet_name=sheet_name)
 
-    print("oldf df >>>>>>>>>>> ")
+    df = pd.DataFrame(df)
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     print(df)
 
-    df = pd.DataFrame(df)
+    df.fillna(value="0", inplace=True)
+    print(df)
 
-    df.fillna(value=0, inplace=True)
 
     # df = df.dropna(how='all', axis='columns')
     # df = df.dropna()
+
+
+    # df.drop(df.filter(regex="Unname"),axis=1, inplace=True)
+
+
+    # quit()
 
 
     try:
@@ -36,16 +43,14 @@ def downloader_pdf():
             # print("data series >>>   ",   data_series)
             _create_sheet_dir(sheet_name=sheet_name)
             for i in data_series:
-                # if i.endswith(extension):
                 end_name = os.path.basename(i)
                 valid_url = validators.url(i)
                 print("valid url is ", valid_url, i)
-                if valid_url :
-                    request_url = requests.get(valid_url, stream=True)
-                    with open(end_name, 'wb') as smart:
-                        smart.write(request_url.content)
-                else:
+                if not valid_url :
                     continue
+                request_url = requests.get(i, stream=True)
+                with open(end_name, 'wb') as smart:
+                    smart.write(request_url.content)
         elif counts == 1 and  'cont_dwurl' in df:
             data_series = df.squeeze()
             # print("data series >>>   ",   data_series)
