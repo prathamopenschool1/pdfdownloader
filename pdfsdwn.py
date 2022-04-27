@@ -14,7 +14,7 @@ def downloader_pdf():
     df = pd.read_excel(file_name, sheet_name=sheet_name)
 
     df = pd.DataFrame(df)
-    
+
     df = df.dropna(how='all', axis='columns')
     df = df.dropna()
 
@@ -53,7 +53,7 @@ def downloader_pdf():
             for i in data_series:
                 # if i.endswith(extension):
                 end_name = os.path.basename(i)
-                valid_url = validators.url(i)
+                valid_url = validators.url(i.strip())
                 print("valid url is ", valid_url, i)
                 if valid_url :
                     request_url = requests.get(valid_url, stream=True)
@@ -65,7 +65,7 @@ def downloader_pdf():
             print("in this condition ")
             _create_sheet_dir(sheet_name=sheet_name)
             for index, i in enumerate(df['cont_dwurl']):
-                valid_url_i = validators.url(i)
+                valid_url_i = validators.url(i.strip())
                 if valid_url_i == True:
                     # print(valid_url_i, index, i)
                     end_name_i = os.path.basename(i)
@@ -90,7 +90,7 @@ def downloader_pdf():
                                     smart.write(request_url.content)
                 
             for index1, j in enumerate(df['cont_thumburl']):
-                valid_url_j = validators.url(j)
+                valid_url_j = validators.url(j.strip())
                 if valid_url_j == True:
                     # print(valid_url_j, index, i)
                     end_name_j = os.path.basename(j)
@@ -137,7 +137,8 @@ def _extracted_from_downloader_pdf_14(sheet_name, df):
     os.chdir(new_dir[1])
 
     for i, j in df.itertuples(index=False):
-        if i.endswith(extension):
+        valid_url_j = validators.url(i.strip())
+        if valid_url_j == True and i.endswith(extension):
             end_name = os.path.basename(i)
             request_url = requests.get(i, stream=True)
             if not os.path.exists(j):
